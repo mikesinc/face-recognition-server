@@ -1,7 +1,8 @@
 const handleRegister = (db, bcrypt) => (req, res) => {
     const { email, name, password } = req.body;
     if (!email || !name || !password || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
-        return res.status(400).json('incorrect form submission');
+        res.statusMessage = "please enter valid email address.";
+        return res.status(400).end();
     }
     const hash = bcrypt.hashSync(password);
     return db.transaction(trx => {
